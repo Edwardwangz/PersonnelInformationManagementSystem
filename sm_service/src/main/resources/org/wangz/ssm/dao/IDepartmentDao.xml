@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.4//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.wangz.ssm.dao.IDepartmentDao">
+
+    <resultMap id="RM_Department" type="Department">
+        <id property="dId" column="d_id" javaType="int"></id>
+        <result property="dName" column="d_name" javaType="String"></result>
+        <result property="dLocation" column="d_location" javaType="String"></result>
+    </resultMap>
+
+
+    <insert id="insert" parameterType="Department" useGeneratedKeys="true">
+        insert into department(d_name,d_location) values (#{dName},#{dLocation})
+    </insert>
+
+    <delete id="delete" parameterType="Integer">
+        delete from department where d_id = #{dId}
+    </delete>
+
+    <update id="update" parameterType="Department">
+        update department set d_name = #{dName}, d_location = #{dLocation} where d_id = #{dId}
+    </update>
+
+    <select id="selectById" parameterType="Integer" resultMap="RM_Department">
+        select * from department where d_id = #{dId}
+    </select>
+
+    <select id="selectAll" resultMap="RM_Department">
+        select * from department
+    </select>
+</mapper>

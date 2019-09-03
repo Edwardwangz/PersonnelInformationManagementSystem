@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.4//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.wangz.ssm.dao.IEmployeeDao">
+
+    <resultMap id="RM_Employee" type="Employee">
+        <id property="eId" column="e_id" javaType="Integer"/>
+        <result property="account" column="account" javaType="String"/>
+        <result property="password" column="password" javaType="String"/>
+        <result property="status" column="status" javaType="String"/>
+        <result property="eDepartment" column="e_department" javaType="Integer"/>
+        <result property="eName" column="e_name" javaType="String"/>
+        <result property="gender" column="gender" javaType="String"/>
+        <result property="idcards" column="idcards" javaType="String"/>
+        <result property="entryTime" column="entry_time" javaType="java.util.Date"/>
+        <result property="separationTime" column="separation_time" javaType="java.util.Date"/>
+        <result property="born" column="born" javaType="java.util.Date"/>
+        <result property="remark" column="remark" javaType="String"/>
+        <association property="department" column="e_department" javaType="Department"
+                     select="org.wangz.ssm.dao.IDepartmentDao.selectById"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="Employee" useGeneratedKeys="true">
+        inser into employee (account,`password`,`status`,e_department,e_name,gender,
+            idcards,entry_time,separation_time,born,remark)
+        values (#{account},#{password},#{status},#{eDepartment},#{eName},#{gender},
+            #{idcards},#{entryTime},#{separationTime},#{born},#{remark})
+    </insert>
+
+    <delete id="delete" parameterType="Integer">
+        delete from employee where e_id = #{eId}
+    </delete>
+
+    <update id="update" parameterType="Employee">
+        update employee set account = #{account}, `password` = #{password}, `status` = #{status}, e_department = #{eDepartment},
+            e_name = #{eName}, gender = #{gender}, idcards = #{idcards}, entry_time = #{entryTime},
+            separation_time = #{separationTime}, born = #{born}, remark = #{remark}
+            where e_id = #{eId}
+    </update>
+
+    <select id="selectById" parameterType="Integer" resultMap="RM_Employee">
+        select * from employee where e_id = #{eId}
+    </select>
+
+    <select id="selectAll" resultMap="RM_Employee">
+        select * from employee
+    </select>
+</mapper>
